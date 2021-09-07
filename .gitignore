@@ -1,2 +1,4 @@
 Pipfile.lock
 Pipfile
+chromedriver
+.pytest_cache
