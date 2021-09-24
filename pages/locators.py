@@ -14,3 +14,4 @@ class ProductPageLocators:
     CARD_TOTAL = (By.CSS_SELECTOR, ".alert-info .alertinner strong")
     PRODUCT_ADD = (By.CSS_SELECTOR, ".alertinner strong")
     CARD_BUTTON = (By.CSS_SELECTOR, ".product_main form button")
+    SUCCESS_MESSAGE = (By.CSS_SELECTOR, ".alert-success")

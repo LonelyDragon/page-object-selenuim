@@ -22,3 +22,11 @@ class ProductPage(BasePage):
         product_name_add = self.browser.find_element(
             *ProductPageLocators.PRODUCT_ADD).text
         assert product_name == product_name_add, "Wrong item or empty add to card"
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+        "Success message is presented, but should not be"
+
+    def element_should_disappear(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), \
+        "Success message should be disappear but not"
