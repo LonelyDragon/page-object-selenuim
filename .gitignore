@@ -2,3 +2,5 @@ Pipfile.lock
 Pipfile
 chromedriver
 .pytest_cache
+.vscode
+__pycache__
