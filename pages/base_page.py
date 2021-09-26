@@ -11,33 +11,43 @@ class BasePage:
         self.url = url
         self.browser.implicitly_wait(timeout)
 
-    def go_to_login_page(self):
+    def go_to_login_page(self) -> None:
+        # переход на  страницу логине
         link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
         link.click()
 
-    def should_be_login_link(self):
+    def go_to_basket_page(self) -> None:
+        # переход на страницу корзины
+        link = self.browser.find_element(*BasePageLocators.BASKET_LINK)
+        link.click()
+
+    def should_be_login_link(self) -> None:
+        # проверка на наличие ссылки логина
         assert self.is_element_present(
             *BasePageLocators.LOGIN_LINK), "Login link is not presented"
 
-    def open(self):
+    def open(self) -> None:
         self.browser.get(self.url)
     
-    def is_element_present(self, how, what):
+    def is_element_present(self, how, what) -> bool:
+        # проверка на наличие элемента
         try:
             self.browser.find_element(how, what)
         except NoSuchElementException:
             return False
         return True
     
-    def is_not_element_present(self, how, what, timeout=4):
+    def is_not_element_present(self, how, what, timeout=4) -> bool:
+        # проверка на отсутствие элемента
         try:
-            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
+            WebDriverWait(self.browser, timeout).\
+                until(EC.presence_of_element_located((how, what)))
         except TimeoutException:
             return True
-
         return False
     
-    def is_disappeared(self, how, what, timeout=4):
+    def is_disappeared(self, how, what, timeout=4) -> bool:
+        # проверка на исчезновение элемента
         try:
             WebDriverWait(self.browser, timeout, 1, TimeoutException).\
                 until_not(EC.presence_of_element_located((how, what)))
@@ -45,7 +55,7 @@ class BasePage:
             return False
         return True
 
-    def solve_quiz_and_get_code(self):
+    def solve_quiz_and_get_code(self) -> None:
         alert = self.browser.switch_to.alert
         x = alert.text.split(" ")[2]
         answer = str(math.log(abs((12 * math.sin(float(x))))))
@@ -58,3 +68,8 @@ class BasePage:
             alert.accept()
         except NoAlertPresentException:
             print("No second alert presented")
+
+    def should_be_authorized_user(self) -> None:
+        # проверка на авторизированность юзера
+        assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented," \
+            " probably unauthorised user"
